@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Accreditation Form</title>
+		<script type="text/javascript">
+
+			function showName() {
+			 const userInput = document.querySelector('#name').value
+			 document.querySelector('#display_name').innerHTML = userInput
+			}
+
+			function showCompany() {
+			 const userInput = document.querySelector('#company').value
+			 document.querySelectorAll('#display_company').forEach(function (el) {
+				el.innerHTML  = userInput
+			 })
+			}
+
+			function showTitle() {
+			 const userInput = document.querySelector('#title').value
+			 document.querySelector('#display_position').innerHTML = userInput
+			}
+			
+		</script>
+		
+	</head>
+	<body>
+
+		<div class="container" style="padding: 4rem; width: 90%;">
+
+			<div class="required" style="font-style: italic; font-size: 13px;">Please complete this form by inputting the appropiate information in the fields below (all of which are required).
+			</div>
+
+
+			<div class="form-title">
+				<h1 style="text-align: center">
+					Enhanced Respiratory Care Program: <br />
+					Standards of Accreditation for Long Term Ventilator Facilities <br />
+					<span style="text-decoration: underline">Attestation & Certification</span>
+				</h1>
+			</div>
+
+			<div class="form-text" style="padding: 1rem;">
+				<p>
+					This attestation and certification are given in sudivort of an application
+					for accreditation of 
+					<div style="display: inline;"> 
+						<span id="display_company">___________________</span>.
+						<div>[company/organization]</div> 
+					</div> 
+				</p>
+
+				<p>
+					I <span id="display_name">_____</span>, <span id="display_position">_______</span> of <span id="display_company">___________________</span> hereby certify that:
+					<p>[name] [position]   [company/organization]</p>
+				</p>
+
+				<ol style="padding-top: 1rem; padding-bottom: 1rem;  line-height: 1.6;">
+					<li>I have read the Enhanced Respiratory Care Program: Standards of Accreditation for Long Term Ventilator Facilities (the “Respiratory Care Standards”), a copy of which is attached to this attestation and certification.</li>
+					<li style="padding-top: .5rem; padding-bottom: .5rem;">[company/organization] meets or exceeds the requirements of the Respiratory Care Standards.</li>
+					<li>In support of the Attestation and Certification, I will forward to the Physician-Patient Alliance for Health & Safety within 14 days of the date set forth below, data which demonstrates that [company/organization] meets or exceeds the requirements of the Respiratory Care Standards.</li>
+				</ol>
+			</div>
+		
+			<table width="50%" border="2px solid black" cellpadding="0" cellspacing="0" style= "border-collapse: collapse; margin-left: auto; margin-right: auto;">
+				<!-- Date row -->
+				<tr>
+					<td align="center" style="padding: .5rem; text-align: center;">
+						Date:
+					</td>
+					<td align="center" style="padding: .5rem">
+						<input type="date" name="date" id="date">
+					</td>
+				</tr>
+				<!-- /Date row -->
+
+				<!-- Signature Line row -->
+				<tr>
+					<td align="center" style="padding: .5rem; text-align: center;">
+						Signature Line:
+					</td>
+
+					<td align="center" style="padding: 1.5rem">
+						<div>
+    					<canvas id="signatureCanvas" width="400" height="150" style="background: #f3f3f3;"></canvas>
+    					<button type="button" onclick="clearSignature()">Clear</button>
+  					</div>
+					</td>
+				</tr>
+				<!-- /Signature Line row -->
+
+				<!-- Name row -->
+				<tr>
+					<td align="center" style="padding: .5rem; text-align: center;">Name:</td>
+					<td align="center" style="padding: .5rem"><input id="name" type="text" onkeyup="showName()"></td>
+				</tr>
+				<!-- /Name row -->
+
+				<!-- Title row -->
+				<tr>
+					<td align="center" style="padding: .5rem; text-align: center;">Title:</td>
+					<td align="center" style="padding: .5rem"><input type="text" id="title" onkeyup="showTitle()"></td>
+				</tr>
+				<!-- /Title row -->
+
+				<!-- Email Row -->
+				<tr>
+					<td align="center" style="padding: .5rem; text-align: center;">Email:</td>
+					<td align="center" style="padding: .5rem">
+						<input type="email" name="email" id="email">
+					</td>
+				</tr>
+				<!-- /Email row -->
+
+				<!-- Company row -->
+				<tr>
+					<td align="center" style="padding: .5rem; text-align: center;">Company/oraganization:</td>
+					<td align="center" style="padding: .5rem"><input type="text" id="company" onkeyup="showCompany()"></td>
+				</tr>
+				<!-- /Company row -->
+
+			</table>
+		</div>
+
+		<script>
+  const canvas = document.getElementById("signatureCanvas");
+  const signatureDataInput = document.getElementById("signatureData");
+  const ctx = canvas.getContext("2d");
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+
+  function draw(e) {
+    if (!isDrawing) return;
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+  }
+
+  canvas.addEventListener("mousedown", (e) => {
+    isDrawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+  });
+
+  canvas.addEventListener("mousemove", draw);
+  canvas.addEventListener("mouseup", () => (isDrawing = false));
+  canvas.addEventListener("mouseout", () => (isDrawing = false));
+
+  function clearSignature() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    signatureDataInput.value = "";
+  }
+</script>
+
+
+
+	</body>
+</html>
